@@ -17,3 +17,8 @@ p {
 img {
   margin-top: 30px;
 }
+
+/* div[role:alert] {
+  background-color: orange;
+  color: black;
+} */
