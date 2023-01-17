@@ -3,6 +3,7 @@ import React from 'react';
 import axios from 'axios';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
+import Alert from 'react-bootstrap/Alert';
 
 class App extends React.Component {
   constructor(props) {
@@ -11,10 +12,10 @@ class App extends React.Component {
       city: '',
       cityData: [],
       cityMap: '',
-      error: false, 
+      error: false,
       errorMessage: ''
     }
-    
+
   }
 
   handleInput = (event) => {
@@ -34,13 +35,13 @@ class App extends React.Component {
       // render that data to the page
       this.setState({
         cityData: cityDataFromAxios.data[0],
-      }, this.viewMap) 
+      }, this.viewMap)
 
     } catch (error) {
       this.setState({
         error: true,
         errorMessage: error.message,
-      })     
+      })
     }
   }
 
@@ -48,7 +49,7 @@ class App extends React.Component {
 
     try {
       let mapUrl = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.cityData.lat},${this.state.cityData.lon}&zoom=12&size=500x500&format=jpeg`
-      
+
       this.setState({
         cityMap: mapUrl,
       })
@@ -57,7 +58,7 @@ class App extends React.Component {
       this.setState({
         error: true,
         errorMessage: error.message,
-      })     
+      })
     }
     console.log(this.state.cityMap);
   }
@@ -72,17 +73,19 @@ class App extends React.Component {
           </label>
           <button type='submit'>Explore!</button>
         </form>
-      {
-        this.state.error 
-        ? <p>{this.state.errorMessage}</p> :  
+        {this.state.error ?
+          <Alert variant="warning">
+            <Alert.Heading>ERROR</Alert.Heading>
+            <p>{this.state.errorMessage}</p>
+          </Alert> :  
         <Container>
           <Row>
             <p>Location: {this.state.cityData.display_name}</p>
             <p>Latitude: {this.state.cityData.lat}</p>
             <p>Longitude: {this.state.cityData.lon}</p>
             {this.state.cityMap ?
-            <img src = {this.state.cityMap} alt = 'map of city'/>
-            : null
+              <img src={this.state.cityMap} alt='map of city' />
+              : null
             }
           </Row>
         </Container>
