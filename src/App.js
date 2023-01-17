@@ -10,6 +10,7 @@ class App extends React.Component {
     this.state = {
       city: '',
       cityData: [],
+      cityMap: '',
       error: false, 
       errorMessage: ''
     }
@@ -32,16 +33,33 @@ class App extends React.Component {
       let cityDataFromAxios = await axios.get(url);
       // render that data to the page
       this.setState({
-        cityData: cityDataFromAxios.data[0]
-      })
-      console.log(cityDataFromAxios);
-    
+        cityData: cityDataFromAxios.data[0],
+      }, this.viewMap) 
+
     } catch (error) {
       this.setState({
         error: true,
         errorMessage: error.message,
       })     
     }
+  }
+
+  viewMap = async () => {
+
+    try {
+      let mapUrl = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.cityData.lat},${this.state.cityData.lon}&zoom=12&size=500x500&format=jpeg`
+      
+      this.setState({
+        cityMap: mapUrl,
+      })
+
+    } catch (error) {
+      this.setState({
+        error: true,
+        errorMessage: error.message,
+      })     
+    }
+    console.log(this.state.cityMap);
   }
 
   render() {
@@ -62,17 +80,14 @@ class App extends React.Component {
             <p>Location: {this.state.cityData.display_name}</p>
             <p>Latitude: {this.state.cityData.lat}</p>
             <p>Longitude: {this.state.cityData.lon}</p>
+            {this.state.cityMap ?
+            <img src = {this.state.cityMap} alt = 'map of city'/>
+            : null
+            }
           </Row>
         </Container>
       }
-    
-        {/* <Container>
-          <Row>
-            <p>{this.state.cityData.display_name}</p>
-            <p>{this.state.cityData.lat}</p>
-            <p>{this.state.cityData.lon}</p>
-          </Row>
-        </Container> */}
+
 
       </>
     )
