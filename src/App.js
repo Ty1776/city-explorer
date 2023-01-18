@@ -59,7 +59,8 @@ class App extends React.Component {
   getForcast = async () => {
 
     try {
-      let url = `${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.city}&lon=${this.state.cityData.lon}&lat=${this.state.cityData.lat}`
+      // let url = `${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.city}&lon=${this.state.cityData.lon}&lat=${this.state.cityData.lat}`
+      let url = `https://tyler-h-city-explorer-server.onrender.com/weather?searchQuery=${this.state.city}&lon=${this.state.cityData.lon}&lat=${this.state.cityData.lat}`
       let weatherFromAxios = await axios.get(url);
 
       this.setState({
