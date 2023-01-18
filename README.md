@@ -36,3 +36,5 @@ Start time: 1315
 Finish time: 1705
 
 Actual time needed to complete: 4hrs
+
+![Whiteboard](img/WRRC-Whiteboard-Screenshot.jpg)

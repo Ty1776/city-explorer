@@ -4,6 +4,7 @@ import axios from 'axios';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Alert from 'react-bootstrap/Alert';
+import Weather from './components/Weather';
 
 class App extends React.Component {
   constructor(props) {
@@ -12,8 +13,11 @@ class App extends React.Component {
       city: '',
       cityData: [],
       cityMap: '',
+      weather: [],
       error: false,
-      errorMessage: ''
+      errorMessage: '',
+      weatherError: false,
+      weatherErrorMessage: ''
     }
 
   }
@@ -22,6 +26,11 @@ class App extends React.Component {
     this.setState({
       city: event.target.value
     })
+  }
+
+  callApis = () => {
+    this.viewMap();
+    this.getForcast();
   }
 
   getCityData = async (event) => {
@@ -35,7 +44,9 @@ class App extends React.Component {
       // render that data to the page
       this.setState({
         cityData: cityDataFromAxios.data[0],
-      }, this.viewMap)
+        error: false,
+        errorMessage: '',
+      }, this.callApis)
 
     } catch (error) {
       this.setState({
@@ -43,6 +54,26 @@ class App extends React.Component {
         errorMessage: error.message,
       })
     }
+  }
+
+  getForcast = async () => {
+
+    try {
+      let url = `${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.city}&lon=${this.state.cityData.lon}&lat=${this.state.cityData.lat}`
+      let weatherFromAxios = await axios.get(url);
+
+      this.setState({
+        weather: weatherFromAxios.data,
+        weatherError: false,
+        weatherErrorMessage: '',
+      })
+    } catch (error) {
+      this.setstate({
+        weatherError: true,
+        weatherErrorMessage: error.message
+      })
+    }
+
   }
 
   viewMap = async () => {
@@ -60,7 +91,6 @@ class App extends React.Component {
         errorMessage: error.message,
       })
     }
-    console.log(this.state.cityMap);
   }
 
   render() {
@@ -77,19 +107,21 @@ class App extends React.Component {
           <Alert variant="warning">
             <Alert.Heading>ERROR</Alert.Heading>
             <p>{this.state.errorMessage}</p>
-          </Alert> :  
-        <Container>
-          <Row>
-            <p>Location: {this.state.cityData.display_name}</p>
-            <p>Latitude: {this.state.cityData.lat}</p>
-            <p>Longitude: {this.state.cityData.lon}</p>
-            {this.state.cityMap ?
-              <img src={this.state.cityMap} alt='map of city' />
-              : null
-            }
-          </Row>
-        </Container>
-      }
+          </Alert> :
+          <Container>
+            <Row>
+              <p>Location: {this.state.cityData.display_name}</p>
+              <p>Latitude: {this.state.cityData.lat}</p>
+              <p>Longitude: {this.state.cityData.lon}</p>
+
+              <Weather weather = {this.state.weather} />
+              {this.state.cityMap ?
+                <img src={this.state.cityMap} alt='map of city' />
+                : null
+              }
+            </Row>
+          </Container>
+        }
 
 
       </>
