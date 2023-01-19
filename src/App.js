@@ -5,6 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Alert from 'react-bootstrap/Alert';
 import Weather from './components/Weather';
+import Movies from './components/Movies';
 
 class App extends React.Component {
   constructor(props) {
@@ -14,10 +15,13 @@ class App extends React.Component {
       cityData: [],
       cityMap: '',
       weather: [],
+      movie: [],
       error: false,
       errorMessage: '',
       weatherError: false,
-      weatherErrorMessage: ''
+      weatherErrorMessage: '',
+      movieError: false,
+      movieErrorMessage: ''
     }
 
   }
@@ -31,6 +35,7 @@ class App extends React.Component {
   callApis = () => {
     this.viewMap();
     this.getForcast();
+    this.getMovie();
   }
 
   getCityData = async (event) => {
@@ -62,19 +67,38 @@ class App extends React.Component {
       let url = `${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.city}&lon=${this.state.cityData.lon}&lat=${this.state.cityData.lat}`
 
       let weatherFromAxios = await axios.get(url);
-
+      console.log(weatherFromAxios);
       this.setState({
         weather: weatherFromAxios.data,
         weatherError: false,
         weatherErrorMessage: '',
       })
     } catch (error) {
-      this.setstate({
+      this.setState({
         weatherError: true,
         weatherErrorMessage: error.message
       })
     }
+  }
 
+  getMovie = async () => {
+
+    try {
+      let url = `${process.env.REACT_APP_SERVER}/movies?searchQuery=${this.state.city}`
+console.log(url);
+      let movieFromAxios = await axios.get(url);
+      console.log(movieFromAxios);
+      this.setState({
+        movie: movieFromAxios.data,
+        movieError: false,
+        movieErrorMessage: '',
+      })
+    } catch (error) {
+      this.setState({
+        movieError: true,
+        movieErrorMessage: error.message
+      })
+    }
   }
 
   viewMap = async () => {
@@ -120,6 +144,8 @@ class App extends React.Component {
                 <img src={this.state.cityMap} alt='map of city' />
                 : null
               }
+              <Movies movie = {this.state.movie} />
+
             </Row>
           </Container>
         }

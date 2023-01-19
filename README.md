@@ -38,3 +38,15 @@ Finish time: 1705
 Actual time needed to complete: 4hrs
 
 ![Whiteboard](img/WRRC-Whiteboard-Screenshot.jpg)
+
+Name of feature: Movies and Weather
+
+Estimate of time needed to complete: 3hrs
+
+Start time: 1330
+
+Finish time: 1530
+
+Actual time needed to complete: 2hrs  
+
+![Whiteboard](img/WhiteboardLab08.png)
