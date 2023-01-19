@@ -50,3 +50,15 @@ Finish time: 1530
 Actual time needed to complete: 2hrs  
 
 ![Whiteboard](img/WhiteboardLab08.png)
+
+Name of feature: Refactoring
+
+Estimate of time needed to complete: 2 hours
+
+Start time: 1430
+
+Finish time: 1540
+
+Actual time needed to complete: ~1hrs
+
+![Whiteboard](img/WRRC%20Screenshot%20Lab%209.jpg)
