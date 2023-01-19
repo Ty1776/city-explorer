@@ -42,11 +42,8 @@ class App extends React.Component {
     event.preventDefault();
 
     try {
-      // make a call to API
       let url = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json&limit=1`
-      // setState with data I get back
       let cityDataFromAxios = await axios.get(url);
-      // render that data to the page
       this.setState({
         cityData: cityDataFromAxios.data[0],
         error: false,
