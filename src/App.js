@@ -85,7 +85,7 @@ class App extends React.Component {
 
     try {
       let url = `${process.env.REACT_APP_SERVER}/movies?searchQuery=${this.state.city}`
-console.log(url);
+      console.log(url);
       let movieFromAxios = await axios.get(url);
       console.log(movieFromAxios);
       this.setState({
@@ -139,12 +139,12 @@ console.log(url);
               <p>Latitude: {this.state.cityData.lat}</p>
               <p>Longitude: {this.state.cityData.lon}</p>
 
-              <Weather weather = {this.state.weather} />
+              <Weather weather={this.state.weather} />
               {this.state.cityMap ?
                 <img src={this.state.cityMap} alt='map of city' />
                 : null
               }
-              <Movies movie = {this.state.movie} />
+              <Movies movie={this.state.movie} />
 
             </Row>
           </Container>
