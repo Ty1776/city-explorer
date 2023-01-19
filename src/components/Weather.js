@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Card from 'react-bootstrap/Card';
+import WeatherDay from './WeatherDay';
 
 export default class Weather extends Component {
   render() {
@@ -8,10 +9,7 @@ export default class Weather extends Component {
       <div>
         <Card>
           {this.props.weather.map((day, idx) => (
-            <div key={idx}>
-              <p>Date: {day.date}</p>
-              <p>Weather: {day.description}</p>
-            </div>
+            <WeatherDay key={idx} date={day.date} description={day.description} />
           ))
           }
         </Card>
