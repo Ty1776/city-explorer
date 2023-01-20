@@ -64,7 +64,6 @@ class App extends React.Component {
       let url = `${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.city}&lon=${this.state.cityData.lon}&lat=${this.state.cityData.lat}`
 
       let weatherFromAxios = await axios.get(url);
-      console.log(weatherFromAxios);
       this.setState({
         weather: weatherFromAxios.data,
         weatherError: false,
@@ -82,9 +81,7 @@ class App extends React.Component {
 
     try {
       let url = `${process.env.REACT_APP_SERVER}/movies?searchQuery=${this.state.city}`
-      console.log(url);
       let movieFromAxios = await axios.get(url);
-      console.log(movieFromAxios);
       this.setState({
         movie: movieFromAxios.data,
         movieError: false,
