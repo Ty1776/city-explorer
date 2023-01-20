@@ -4,7 +4,6 @@ import WeatherDay from './WeatherDay';
 
 export default class Weather extends Component {
   render() {
-    console.log(this.props.weather);
     return (
       <div>
         <Card>
